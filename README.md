@@ -1,6 +1,6 @@
 # Künz Agententraining: deine Entwicklungsumgebung
 
-Öffne [deinen Codespace im Browser](https://codespaces.new/andnig/kuenz-maf-training?quickstart=1).
+Öffne [deinen Codespace im Browser](https://codespaces.new/pondhouse-data/kuenz-maf-training?quickstart=1).
 Du brauchst einen persönlichen GitHub-Account und einen Browser. Python 3.13,
 uv, Azure CLI und die festgelegten MAF-Pakete werden automatisch eingerichtet.
 Jede Person arbeitet in ihrem eigenen Codespace. Die Beispieldaten sind synthetisch.
