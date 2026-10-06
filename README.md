@@ -5,6 +5,8 @@ Du brauchst einen persönlichen GitHub-Account und einen Browser. Python 3.13,
 uv, Azure CLI und die festgelegten MAF-Pakete werden automatisch eingerichtet.
 Jede Person arbeitet in ihrem eigenen Codespace. Die Beispieldaten sind synthetisch.
 
+[Vorbereitung zum Ausdrucken (PDF)](vorbereitung.pdf)
+
 ## Vor dem Training
 
 1. Öffne den Link und wähle **Create codespace**. Warte auf den fertigen Editor und das Ende der Einrichtung.
