@@ -1,0 +1,24 @@
+[project]
+name = "kuenz-hosted-starter"
+version = "1.0.0"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "agent-framework-core==1.19.0",
+  "agent-framework-foundry==1.13.1",
+  "agent-framework-foundry-hosting==1.0.0b260918",
+  "azure-ai-projects==2.6.1",
+  "azure-identity==1.25.1",
+  "python-dotenv==1.1.1",
+  "azure-monitor-opentelemetry-exporter==1.0.0b57",
+  "requests==2.32.5",
+]
+
+[dependency-groups]
+dev = ["pytest==8.4.2"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
