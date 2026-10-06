@@ -43,6 +43,14 @@ Lies danach `lessons/runtime.py` und `lessons/ue08_model.py`; die weiteren
 Schritte stehen im Aufgabenblatt Ü8. Für Ü9–Ü13 verwendest du denselben Codespace.
 Die roten TODO-Tests der späteren Übungen gehören zum Starterstand.
 
+## Nach dem Training: dein eigenes MAF-Projekt
+
+[Transferblatt im Leitstand-Stil (PDF)](transfer.pdf) führt dich Schritt für Schritt
+zu einem eigenen Projekt im Browser. Ausgangspunkt ist der eigenständige
+[MAF-Starter](https://github.com/pondhouse-data/maf-starter) mit Codespaces-Konfiguration,
+Paketdefinition und einem kleinen vollständigen Agenten in `agent.py`.
+Das Blatt erklärt auch deinen eigenen Foundry-Modellzugang und das Aufbewahren des Codes.
+
 ## Arbeit aufbewahren
 
 Dateien speichern, dann den Codespace stoppen. Zum Fortsetzen denselben Codespace
