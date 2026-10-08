@@ -19,7 +19,18 @@ fertig bekommt, macht im nächsten Ordner weiter. Den neuen Code schreibst du mi
 GitHub Copilot; jede Anleitung enthält die Prompts und sagt, wie du den Vorschlag prüfst.
 Tests startest du je Ordner, z. B. `uv run pytest 02-tools`.
 
-Die Beispieldaten im Ordner `daten/` sind synthetisch.
+## Woher kommen die Daten?
+
+Alles im Ordner `daten/` ist synthetisch und liegt als JSON im Repository. Das ist dem
+Training geschuldet: So arbeiten alle ohne Zugang zu Künz-Systemen, und jeder Lauf ist
+nachvollziehbar. Im Betrieb kämen dieselben Inhalte aus einem Dienst.
+
+| Datei | Inhalt | Im Betrieb käme das aus … |
+| --- | --- | --- |
+| `pruefauftraege.json` | Prüfaufträge: welche Anlage, welche Spezifikation in welcher Version | der Auftragsverwaltung (z. B. Dataverse, ERP) |
+| `anforderungskatalog.json` | Interne Anforderungen R-01 bis R-06 mit Vergleichsregel | einer gepflegten Quelle (z. B. Dataverse, SharePoint-Liste) |
+| `spezifikation_v1.json`, `_v2.json` | Text des Kunden-Lastenhefts SPEC-001, vorab aus dem Dokument extrahiert und in Abschnitte zerlegt | einem Extraktionsdienst, der das PDF liest (z. B. MarkItDown, Azure AI Document Intelligence) |
+| `referenzbefunde.json` | Von Menschen geprüfte Soll-Befunde für PR-001 und PR-201 | einem Testsatz mit abgenommenen Fällen |
 
 ## Öffnen
 

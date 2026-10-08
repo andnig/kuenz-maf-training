@@ -2,7 +2,7 @@
   "document_id": "SPEC-001",
   "document_version": "1",
   "asset_id": "A-100",
-  "hinweis": "SYNTHETISCH – extrahierter Text für das Künz-Agententraining",
+  "hinweis": "SYNTHETISCH – Text des Lastenhefts SPEC-001 Version 1, für das Training einmal vorab aus dem Dokument extrahiert und in Abschnitte zerlegt. Im Betrieb liefert diesen Text ein Extraktionsdienst (z. B. MarkItDown, Azure AI Document Intelligence).",
   "abschnitte": [
     {
       "abschnitt": "1.1",

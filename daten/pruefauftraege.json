@@ -1,5 +1,5 @@
 {
-  "hinweis": "SYNTHETISCH – Prüfaufträge für das Künz-Agententraining; identisch mit exercises/daten/pruefauftraege.csv bzw. der Dataverse-Tabelle kt_pruefauftraege.",
+  "hinweis": "SYNTHETISCH – Prüfaufträge für das Training. Im Betrieb kämen sie aus der Auftragsverwaltung (z. B. Dataverse oder ERP).",
   "pruefauftraege": [
     {
       "review_id": "PR-001",

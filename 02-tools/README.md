@@ -67,6 +67,12 @@ PR-001 gehört zu Version 1, ein unbekannter Auftrag liefert "fehler", R-03 einz
 uv run pytest 02-tools
 ```
 
+Lass dir die Tests danach erklären:
+
+```text
+Erkläre mir jeden Test in #file:02-tools/test_tools.py in einem Satz: Was prüft er, und wann schlägt er fehl?
+```
+
 ## Code verstehen, bevor du ihn übernimmst
 
 Lies jeden Vorschlag, bevor du ihn annimmst, und beantworte für jedes Tool:
