@@ -1,5 +1,5 @@
 {
-  "name": "Künz MAF Training · Python 3.13",
+  "name": "Künz MAF Training",
   "build": {
     "dockerfile": "Dockerfile"
   },
@@ -13,7 +13,7 @@
     "memory": "8gb",
     "storage": "32gb"
   },
-  "postCreateCommand": "bash .devcontainer/vorbereiten.sh",
+  "postCreateCommand": "uv sync --frozen",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -31,7 +31,8 @@
     "codespaces": {
       "openFiles": [
         "README.md",
-        "lessons/ue08_model.py"
+        "01-hello-world/README.md",
+        "01-hello-world/agent.py"
       ]
     }
   }

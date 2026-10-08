@@ -1,70 +1,60 @@
-# Künz Agententraining: deine Entwicklungsumgebung
+# Künz Agententraining · Microsoft Agent Framework
 
-Öffne [deinen Codespace im Browser](https://codespaces.new/pondhouse-data/kuenz-maf-training?quickstart=1).
-Du brauchst einen persönlichen GitHub-Account und einen Browser. Python 3.13,
-uv, Azure CLI und die festgelegten MAF-Pakete werden automatisch eingerichtet.
-Jede Person arbeitet in ihrem eigenen Codespace. Die Beispieldaten sind synthetisch.
+In diesem Repository baust du Schritt für Schritt einen eigenen Agenten mit dem
+Microsoft Agent Framework (MAF). Jeder Ordner ist ein Schritt. Du beginnst mit
+`01-hello-world` und erweiterst diesen Agenten danach.
 
-[Vorbereitung zum Ausdrucken (PDF)](vorbereitung.pdf)
+| Ordner | Was du baust | Tag |
+| --- | --- | --- |
+| [`01-hello-world`](01-hello-world/README.md) | Einen Agenten, der eine Frage an das Modell in Foundry schickt und antwortet | 2 |
+| [`02-tools`](02-tools/README.md) | Tools: der Agent lädt Prüfauftrag, Anforderungskatalog und Spezifikation | 2 |
+| [`03-session-middleware`](03-session-middleware/README.md) | Ein Gespräch mit Gedächtnis und sichtbaren Toolaufrufen | 2 |
+| [`04-extraktion`](04-extraktion/README.md) | Angaben aus der Spezifikation in einem festen Schema | 2 |
+| [`05-workflow`](05-workflow/README.md) | Den Prüfworkflow: extrahieren, mit Regeln vergleichen, Ergebnis ausgeben | 2 |
+| [`06-hitl`](06-hitl/README.md) | Optional: ein Mensch entscheidet je Klärungspunkt | 3 |
+| [`07-hosting`](07-hosting/README.md) | Den Prüfworkflow als Foundry Hosted Agent bereitstellen | 3 |
 
-## Vor dem Training
+Jeder Ordner startet mit dem fertigen Stand des vorigen. Wer einen Schritt nicht
+fertig bekommt, macht im nächsten Ordner weiter. Den neuen Code schreibst du mit
+GitHub Copilot; jede Anleitung enthält die Prompts und sagt, wie du den Vorschlag prüfst.
+Tests startest du je Ordner, z. B. `uv run pytest 02-tools`.
 
-1. Öffne den Link und wähle **Create codespace**. Warte auf den fertigen Editor und das Ende der Einrichtung.
-2. **Terminal → New Terminal**. Führe `uv run python umgebung_pruefen.py` aus. Erwartet: `"umgebung": "OK"`.
-3. Melde im Trainingschat „Codespace OK“ oder den Schritt und die Fehlermeldung.
-4. Öffne https://github.com/codespaces und wähle beim eigenen Codespace **… → Stop codespace**.
+Die Beispieldaten im Ordner `daten/` sind synthetisch.
 
-GitHub zeigt beim Start, welchem Account die Nutzung zugerechnet wird. Persönliche
-Accounts haben ein enthaltenes Kontingent; prüfe in deinen GitHub-Einstellungen,
-ob ausreichend Kontingent verfügbar ist. Bei einer Sperre melde dich beim Trainer.
-Die Berechtigung für GitHub Copilot wird separat geprüft; Codespaces und Copilot
-haben getrennte Kontingente bzw. Lizenzen.
+## Öffnen
 
-## Im Training: Übung 8
+[Codespace im Browser öffnen](https://codespaces.new/pondhouse-data/kuenz-maf-training?quickstart=1)
 
-Öffne deinen bestehenden Codespace über https://github.com/codespaces.
-Alle Befehle laufen im Terminal im Projekt-Hauptordner.
+Du brauchst einen persönlichen GitHub-Account. Beim Öffnen richtet der Codespace
+Python 3.13, uv, die Azure CLI und die festgelegten MAF-Pakete selbst ein
+(`uv sync --frozen`). Warte, bis das Terminal fertig ist.
 
-```bash
-uv run python umgebung_pruefen.py
-az login --use-device-code --tenant 42abcb50-0ca4-44ec-b66c-80926c94af9d
-az account set --subscription "Kuenz Training 2026"
-```
-
-Bestätige den Gerätecode im Browser mit deinem persönlichen **Trainingskonto**.
-Die vorbereitete `.env` enthält Projekt und Modell. Setze `HOSTED_AGENT_NAME`
-auf deine Nummer, z. B. `kuenz-pruefung-training03` für Person 03.
+Prüfen:
 
 ```bash
-uv run python -m lessons.ue08_model
+uv run python -c "import agent_framework.foundry; print('MAF bereit')"
 ```
 
-Lies danach `lessons/runtime.py` und `lessons/ue08_model.py`; die weiteren
-Schritte stehen im Aufgabenblatt Ü8. Für Ü9–Ü13 verwendest du denselben Codespace.
-Die roten TODO-Tests der späteren Übungen gehören zum Starterstand.
+Erwartet: `MAF bereit`.
 
-## Nach dem Training: dein eigenes MAF-Projekt
+## Was liegt wo?
 
-[Transferblatt im Leitstand-Stil (PDF)](transfer.pdf) führt dich Schritt für Schritt
-zu einem eigenen Projekt im Browser. Ausgangspunkt ist der eigenständige
-[MAF-Starter](https://github.com/pondhouse-data/maf-starter) mit Codespaces-Konfiguration,
-Paketdefinition und einem kleinen vollständigen Agenten in `agent.py`.
-Das Blatt erklärt auch deinen eigenen Foundry-Modellzugang und das Aufbewahren des Codes.
+| Datei | Aufgabe |
+| --- | --- |
+| `01-hello-world/` … `07-hosting/` | Ein Ordner je Lernschritt, jeweils mit Anleitung |
+| `hosted.py`, `deploy.py` | Einen Agenten als Foundry Hosted Agent bereitstellen und aufrufen (Schritt 07) |
+| `daten/` | Prüfaufträge, Anforderungskatalog, Spezifikation v1/v2, Referenzbefunde |
+| `.env.example` | Vorlage für deine Konfiguration: Projektadresse und Deploymentname |
+| `pyproject.toml`, `uv.lock` | Python-Version und exakte Paketversionen (inklusive pytest) |
+| `.devcontainer/` | Einrichtung des Codespace |
+
+Das Projekt verwendet Python 3.13, MAF Core 1.19.0 und den Foundry-Provider 1.13.1.
 
 ## Arbeit aufbewahren
 
-Dateien speichern, dann den Codespace stoppen. Zum Fortsetzen denselben Codespace
-wieder öffnen. GitHub löscht Codespaces nach ihrer eingestellten Aufbewahrungsfrist;
-sichere deshalb deinen Stand am Ende jedes Trainingstags:
+Dateien speichern. Am Ende des Tages auf https://github.com/codespaces beim eigenen
+Codespace **… → Stop codespace** wählen. Zum Weiterarbeiten denselben Codespace
+wieder öffnen. Deine `.env` und die Azure-Anmeldung bleiben im Codespace.
 
-```bash
-uv run python sichern.py
-```
-
-Im Explorer `mein-training.zip` rechts anklicken → **Download**. Die Sicherung
-enthält deinen Code und die Ergebnisse; `.env` und die Azure-Anmeldung bleiben
-in deiner persönlichen Umgebung. Danach **Stop codespace**.
-
-Quellen (abgerufen 06.10.2026):
-- [Codespaces-Vorlagen](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-from-a-template)
-- [Kontingente und Abrechnung](https://docs.github.com/en/billing/concepts/product-billing/github-codespaces)
+Wer nach dem Training eigene Agenten baut, startet mit dem allgemeinen
+[MAF-Starter](https://github.com/pondhouse-data/maf-starter).

@@ -1,9 +1,3 @@
 .venv/
 .env
 __pycache__/
-.pytest_cache/
-.checkpoints/
-berichte/
-results/
-*.receipt.json
-mein-training.zip
