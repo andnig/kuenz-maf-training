@@ -45,6 +45,8 @@ uv run python deploy.py deploy kuenz-pruefung-training03 --datei 07-hosting/work
 
 Foundry baut den Agenten (etwa 1 Minute) und meldet `active`. Danach gehen alle Aufrufe an diese Version.
 
+Erscheint vorher „Kein Application Insights am Projekt; der Agent läuft ohne Tracing.“: Tracing ist im Training nicht eingerichtet; das ist ein Hinweis, kein Fehler.
+
 ## Schritt 3 · Aufrufen und gespeicherte Antwort abrufen
 
 ```bash
