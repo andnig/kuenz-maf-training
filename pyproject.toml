@@ -3,10 +3,10 @@ name = "kuenz-maf-training"
 version = "0.1.0"
 requires-python = ">=3.13,<3.14"
 dependencies = [
-  "agent-framework-core==1.19.0",
-  "agent-framework-foundry==1.13.1",
+  "agent-framework-core==1.21.0",
+  "agent-framework-foundry==1.14.1",
   "azure-ai-projects==2.6.1",
-  "agent-framework-foundry-hosting==1.0.0b260918",
+  "agent-framework-foundry-hosting==1.0.0b261008",
   "azure-identity==1.25.1",
   "python-dotenv==1.1.1",
   "pytest==8.4.2",

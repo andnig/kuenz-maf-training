@@ -9,7 +9,7 @@ Die Entscheidung des Menschen wird getrennt vom KI-Befund gespeichert.
 ## Schritt 1 · Den Prüfer einbauen
 
 ```text
-Erweitere #file:06-hitl/workflow.py (Microsoft Agent Framework 1.19): Vor dem Ergebnis entscheidet ein Mensch
+Erweitere #file:06-hitl/workflow.py (Microsoft Agent Framework 1.21): Vor dem Ergebnis entscheidet ein Mensch
 jeden Klärungspunkt.
 - Neuer Schritt Pruefer nach dem Vergleich: Er fragt für jeden Befund, der nicht "erfüllt" ist, mit
   ctx.request_info nach und läuft mit @response_handler weiter, sobald alle Antworten da sind.

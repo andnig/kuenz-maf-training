@@ -59,7 +59,7 @@ Erwartet: `MAF bereit`.
 | `pyproject.toml`, `uv.lock` | Python-Version und exakte Paketversionen (inklusive pytest) |
 | `.devcontainer/` | Einrichtung des Codespace |
 
-Das Projekt verwendet Python 3.13, MAF Core 1.19.0 und den Foundry-Provider 1.13.1.
+Das Projekt verwendet Python 3.13, MAF Core 1.21.0 und den Foundry-Provider 1.14.1.
 
 ## Arbeit aufbewahren
 

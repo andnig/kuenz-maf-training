@@ -11,7 +11,7 @@ du, welches Tool er wann aufruft und wie lange es dauert.
 ```text
 Baue #file:03-session-middleware/agent.py zu einem kleinen Chat im Terminal um: Fragen lesen und beantworten,
 bis eine leere Eingabe kommt. Der Agent soll sich an das bisherige Gespräch erinnern. Verwende dafür eine
-Session mit agent.create_session() (Microsoft Agent Framework 1.19). Ohne Streaming.
+Session mit agent.create_session() (Microsoft Agent Framework 1.21). Ohne Streaming.
 ```
 
 ```bash

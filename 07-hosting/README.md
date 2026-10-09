@@ -11,15 +11,15 @@ Dafür gibt es im Projekt-Hauptordner zwei fertige Werkzeuge, die für jeden MAF
 | `hosted.py` | Läuft in Foundry. Lädt `erstelle_agent()` aus deiner Datei und stellt den Agenten bereit. |
 | `deploy.py` | Läuft im Codespace. Lädt das Projekt hoch, ruft den Agenten auf, holt gespeicherte Antworten. |
 
-Deine Aufgabe: Der Workflow muss sich wie ein Agent verhalten. Er bekommt eine Nachricht
+Deine Aufgabe: Der Workflow bekommt eine Agent-Schnittstelle, damit Foundry und Copilot Studio ihn aufrufen können. Innen bleibt er derselbe feste Ablauf. Er bekommt eine Nachricht
 („Prüfe PR-101“) und antwortet mit Text (dem Ergebnis als JSON).
 
 **Ausgangspunkt:** der fertige Prüfworkflow aus 05.
 
-## Schritt 1 · Den Workflow zum Agenten machen
+## Schritt 1 · Dem Workflow eine Agent-Schnittstelle geben
 
 ```text
-Erweitere #file:07-hosting/workflow.py, damit der Workflow als Agent laufen kann (Microsoft Agent Framework 1.19,
+Erweitere #file:07-hosting/workflow.py, damit Foundry ihn über die Agent-Schnittstelle aufrufen kann; innen bleibt der feste Ablauf (Microsoft Agent Framework 1.21,
 workflow.as_agent(name="Spezifikationspruefung")):
 - Der erste Schritt bekommt Chat-Nachrichten (list[Message]) wie "Prüfe PR-101" und holt die Auftrags-ID aus
   der letzten Nachricht. Gibt es den Auftrag nicht, antwortet der Agent mit der Fehlermeldung als JSON.

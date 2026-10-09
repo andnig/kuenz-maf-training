@@ -17,7 +17,7 @@ Prompt an Copilot:
 ```text
 Füge in #file:02-tools/agent.py ein Tool aktuelle_uhrzeit hinzu, das die aktuelle Uhrzeit
 als Text "HH:MM" zurückgibt. Verwende den Decorator @tool aus agent_framework
-(Microsoft Agent Framework 1.19) und einen kurzen Docstring. Übergib das Tool dem Agenten mit tools=[...].
+(Microsoft Agent Framework 1.21) und einen kurzen Docstring. Übergib das Tool dem Agenten mit tools=[...].
 ```
 
 Starten und vergleichen:

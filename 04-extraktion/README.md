@@ -9,7 +9,7 @@ Zitat und Wert. Ob eine Anforderung erfüllt ist, entscheidet danach der Code (S
 ## Schritt 1 · Das Schema und die Extraktion
 
 ```text
-Lege 04-extraktion/extraktion.py an (Microsoft Agent Framework 1.19). Ein Agent ohne Tools liest eine Version
+Lege 04-extraktion/extraktion.py an (Microsoft Agent Framework 1.21). Ein Agent ohne Tools liest eine Version
 der Spezifikation und liefert zu jeder Anforderung R-01 bis R-06 die Fundstellen: Abschnitt, wörtliches Zitat
 und die gefundenen Werte. Er bewertet nicht. Nur bei R-06 schlägt er "erfüllt", "abweichend" oder "unklar" vor,
 mit Begründung.

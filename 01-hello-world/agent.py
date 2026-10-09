@@ -75,7 +75,7 @@ async def main() -> None:
     # erscheint sie Stück für Stück, so wie in einem Chat.
     #   1. Öffne Copilot Chat (Sprechblasen-Symbol oben) und schreibe:
     #        "Ändere in 01-hello-world/agent.py den Aufruf von agent.run auf
-    #         Streaming. Verwende Microsoft Agent Framework 1.19:
+    #         Streaming. Verwende Microsoft Agent Framework 1.21:
     #         agent.run(question, stream=True) und gib jedes Update sofort aus."
     #   2. Lies den Vorschlag, bevor du ihn übernimmst: Was ändert sich?
     #   3. Starte erneut und beobachte, wie die Antwort erscheint.

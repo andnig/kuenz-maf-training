@@ -39,7 +39,7 @@ uv run pytest 05-workflow
 ## Schritt 2 · Der Workflow
 
 ```text
-Lege 05-workflow/workflow.py an: ein Workflow mit vier Schritten (Microsoft Agent Framework 1.19,
+Lege 05-workflow/workflow.py an: ein Workflow mit vier Schritten (Microsoft Agent Framework 1.21,
 WorkflowBuilder und Executor):
 Auftrag laden → Angaben extrahieren (#file:05-workflow/extraktion.py) → Regeln vergleichen
 (#file:05-workflow/regeln.py) → Ergebnis ausgeben.
