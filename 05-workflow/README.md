@@ -16,18 +16,14 @@ An Tag 3 machst du diesen Stand in Schritt 07 zum Hosted Agent in Foundry.
 Jede Anforderung im Katalog hat eine `vergleichsregel` (siehe `daten/anforderungskatalog.json`).
 
 ```text
-Lege 05-workflow/regeln.py an, ohne Modellaufruf, einfach lesbar.
-1. gueltige_fundstellen(anforderung, fundstellen, spezifikation): behält nur Fundstellen, deren Zitat im
-   genannten Abschnitt steht (Leerzeichen und "−" vorher vereinheitlichen) und deren Abschnitt (Titel oder Text)
-   keinen der anwendbarkeit.ausschlussbegriffe der Anforderung enthält.
-2. bewerte(anforderung, angabe, spezifikation) gibt ein dict mit requirement_id, status, begruendung, fundstellen zurück:
-   - keine gültige Fundstelle → "unklar"
-   - Regel fachliche_bewertung → bewertung_vorschlag der Angabe
-   - unterschiedliche Werte in den Fundstellen → "unklar" (Widerspruch)
-   - sonst die Regel: teilmenge (Werte ⊆ erlaubt), maximum (Zahl ≤ grenzwert),
-     version_mindestens (Versionsnummern teilweise als Zahlen vergleichen, 2.10 > 2.9), bereich_innerhalb (min/max einhalten)
-   - erfüllt oder abweichend, mit einer kurzen Begründung als Satz.
-Katalog: #file:daten/anforderungskatalog.json
+Lege 05-workflow/regeln.py an: einfacher Code ohne Modellaufruf. Eine Funktion bewerte vergleicht eine Angabe
+aus #file:05-workflow/extraktion.py mit ihrer Anforderung aus #file:daten/anforderungskatalog.json und liefert
+den Befund: Status "erfüllt", "abweichend" oder "unklar" mit einer kurzen Begründung als Satz.
+- Es zählen nur Fundstellen, deren Zitat wirklich im genannten Abschnitt steht (Leerzeichen und Minuszeichen
+  tolerant vergleichen) und deren Abschnitt keinen Ausschlussbegriff der Anforderung enthält.
+- Keine gültige Fundstelle oder unterschiedliche Werte → "unklar".
+- Sonst gilt die vergleichsregel der Anforderung. Bei fachliche_bewertung zählt der Vorschlag des Modells.
+- Versionsnummern als Zahlen vergleichen: 2.10 ist größer als 2.9.
 ```
 
 ```text
@@ -43,17 +39,14 @@ uv run pytest 05-workflow
 ## Schritt 2 · Der Workflow
 
 ```text
-Lege 05-workflow/workflow.py an (Microsoft Agent Framework 1.19, WorkflowBuilder und Executor mit @handler).
-Vier Executors, die ein dict weiterreichen:
-- AuftragLaden: review_id → lade_pruefauftrag
-- AngabenExtrahieren: bekommt den Extraktions-Agenten im Konstruktor, ruft extrahiere aus extraktion.py auf
-- Vergleichen: bewerte aus regeln.py für jede Anforderung des Katalogs
-- ErgebnisAusgeben: ctx.yield_output mit review_id, asset_id, document_id, document_version, befunde und
-  klaerungspunkte (alle Befunde, die nicht "erfüllt" sind).
-Verbinde sie mit WorkflowBuilder(name="spezifikationspruefung", start_executor=...).add_chain([...]).build().
-main(): review_id aus sys.argv, Workflow ausführen, Ergebnis als JSON ausgeben und danach je Anforderung mit
+Lege 05-workflow/workflow.py an: ein Workflow mit vier Schritten (Microsoft Agent Framework 1.19,
+WorkflowBuilder und Executor):
+Auftrag laden → Angaben extrahieren (#file:05-workflow/extraktion.py) → Regeln vergleichen
+(#file:05-workflow/regeln.py) → Ergebnis ausgeben.
+Das Ergebnis enthält review_id, asset_id, document_id, document_version, die Befunde und als klaerungspunkte
+alle Befunde, die nicht "erfüllt" sind.
+Aufruf mit der Auftrags-ID als Argument: Ergebnis als JSON ausgeben und danach je Anforderung mit
 #file:daten/referenzbefunde.json vergleichen ("✓"/"✗").
-Nutze #file:05-workflow/extraktion.py und #file:05-workflow/regeln.py.
 ```
 
 ```bash

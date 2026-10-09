@@ -9,10 +9,9 @@ du, welches Tool er wann aufruft und wie lange es dauert.
 ## Schritt 1 · Ein Gespräch mit Session
 
 ```text
-Baue #file:03-session-middleware/agent.py zu einem kleinen Chat um: In einer Schleife mit input("Du: ")
-Fragen lesen, bis eine leere Eingabe kommt. Erzeuge vor der Schleife mit agent.create_session() eine Session
-und übergib sie bei jedem agent.run(frage, session=session). Gib die Antwort mit "Agent: " aus.
-Microsoft Agent Framework 1.19, ohne Streaming.
+Baue #file:03-session-middleware/agent.py zu einem kleinen Chat im Terminal um: Fragen lesen und beantworten,
+bis eine leere Eingabe kommt. Der Agent soll sich an das bisherige Gespräch erinnern. Verwende dafür eine
+Session mit agent.create_session() (Microsoft Agent Framework 1.19). Ohne Streaming.
 ```
 
 ```bash
@@ -20,14 +19,13 @@ uv run python 03-session-middleware/agent.py
 ```
 
 Frag nacheinander: „Was gilt für R-03 bei A-100?“ und dann „Und was steht dazu in Version 1 der Spezifikation?“.
-Der Agent versteht das „dazu“. Entferne zum Vergleich `session=session` und frag noch einmal.
+Der Agent versteht das „dazu“. Nimm zum Vergleich die Session beim Aufruf von `agent.run` heraus und frag noch einmal.
 
 ## Schritt 2 · Toolaufrufe sichtbar machen
 
 ```text
-Ergänze in #file:03-session-middleware/agent.py eine Function-Middleware mit @function_middleware aus
-agent_framework. Sie misst die Zeit um await call_next() und gibt danach Toolname und Dauer aus,
-z. B. "  [Tool lade_anforderungskatalog, 0.00 s]". Übergib sie dem Agenten mit middleware=[...].
+Ergänze in #file:03-session-middleware/agent.py eine Middleware mit @function_middleware aus agent_framework,
+die bei jedem Toolaufruf Toolname und Dauer ausgibt, z. B. "  [Tool lade_anforderungskatalog, 0.00 s]".
 ```
 
 Starte den Chat erneut. Bei jeder Frage siehst du jetzt, welche Tools das Modell aufruft.

@@ -41,7 +41,7 @@ mit @tool aus agent_framework. Die Daten liegen im Ordner daten im Projekt-Haupt
 - lade_anforderungskatalog(asset_id, requirement_id=None) gibt die Anforderungen aus
   #file:daten/anforderungskatalog.json zurück, auf Wunsch nur eine einzelne Anforderung.
 - lade_spezifikation(document_version) lädt daten/spezifikation_v1.json bzw. daten/spezifikation_v2.json.
-Beschreibe jeden Parameter mit Annotated[str, Field(description=...)] und jedes Tool mit einem Docstring.
+Beschreibe jeden Parameter und jedes Tool mit einem Docstring.
 Gibt es eine ID oder Version nicht, gib {"fehler": "..."} zurück statt eine Ausnahme zu werfen.
 Halte den Code einfach. Importiere die Tools in 02-tools/agent.py, übergib alle vier dem Agenten und
 ändere die Instructions: Fragen nur mit den Tools beantworten, bei einem Fehler nichts erfinden.
@@ -78,7 +78,7 @@ Erkläre mir jeden Test in #file:02-tools/test_tools.py in einem Satz: Was prüf
 Lies jeden Vorschlag, bevor du ihn annimmst, und beantworte für jedes Tool:
 
 1. **Was ist neu?** Welche Zeilen hat Copilot geändert oder angelegt?
-2. **Welche Eingaben?** Welche Parameter, und was sieht das Modell davon (Docstring, `description`)?
+2. **Welche Eingaben?** Welche Parameter, und was sieht das Modell davon (Name, Docstring, Beschreibung)?
 3. **Was kommt zurück?** Wie sieht das Ergebnis für PR-001 aus?
 4. **Was passiert bei Fehlern?** Was bekommt das Modell bei PR-999?
 

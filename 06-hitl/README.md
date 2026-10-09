@@ -9,16 +9,13 @@ Die Entscheidung des Menschen wird getrennt vom KI-Befund gespeichert.
 ## Schritt 1 · Den Prüfer einbauen
 
 ```text
-Erweitere #file:06-hitl/workflow.py (Microsoft Agent Framework 1.19):
-1. Neuer Executor Pruefer zwischen Vergleichen und ErgebnisAusgeben. Im @handler für jeden Befund, der nicht
-   "erfüllt" ist, ctx.request_info(befund, str, request_id=requirement_id) aufrufen. Gibt es keinen, das dict direkt
-   weitergeben.
-2. Eine Methode mit @response_handler nimmt (befund, antwort: str, ctx) entgegen, merkt sich die Antwort je
-   requirement_id und gibt das dict mit "entscheidungen" weiter, sobald alle Antworten da sind.
-3. ErgebnisAusgeben schreibt zusätzlich "entscheidungen" ins Ergebnis.
-4. main(): den Workflow mit stream=True laufen lassen und alle Ereignisse vom Typ "request_info" sammeln.
-   Für jede Anfrage Befund und Fundstellen anzeigen und mit input() die Entscheidung abfragen.
-   Danach workflow.run(responses=antworten) und das Ergebnis als JSON ausgeben.
+Erweitere #file:06-hitl/workflow.py (Microsoft Agent Framework 1.19): Vor dem Ergebnis entscheidet ein Mensch
+jeden Klärungspunkt.
+- Neuer Schritt Pruefer nach dem Vergleich: Er fragt für jeden Befund, der nicht "erfüllt" ist, mit
+  ctx.request_info nach und läuft mit @response_handler weiter, sobald alle Antworten da sind.
+- Die Entscheidungen kommen getrennt von den Befunden als "entscheidungen" ins Ergebnis.
+- Im Terminal: zu jeder Frage Befund und Fundstellen zeigen, die Entscheidung abfragen und den Workflow
+  mit den Antworten fortsetzen.
 ```
 
 ```bash

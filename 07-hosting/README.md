@@ -19,16 +19,14 @@ Deine Aufgabe: Der Workflow muss sich wie ein Agent verhalten. Er bekommt eine N
 ## Schritt 1 · Den Workflow zum Agenten machen
 
 ```text
-Erweitere #file:07-hosting/workflow.py, damit der Workflow als Agent laufen kann (Microsoft Agent Framework 1.19):
-1. AuftragLaden bekommt statt eines Strings list[Message] (aus agent_framework). Hole die Auftrags-ID mit
-   re.search(r"PR-\d{3}", ...) aus dem Text der letzten Nachricht. Liefert lade_pruefauftrag einen Fehler,
-   gib ihn mit ctx.yield_output als JSON-Text aus und höre auf (WorkflowContext[dict, str]).
-2. ErgebnisAusgeben gibt das Ergebnis als JSON-Text aus (json.dumps mit ensure_ascii=False,
-   WorkflowContext[Never, str]) und ergänzt "run_id": str(uuid4()).
-3. Neue Funktion erstelle_agent(): FoundryChatClient mit DefaultAzureCredential aus azure.identity,
-   Extraktions-Agent wie bisher, Rückgabe baue_workflow(extraktion).as_agent(name="Spezifikationspruefung").
-4. main(): erstelle_agent().run(f"Prüfe {review_id}") aufrufen, response.text mit json.loads lesen,
-   ausgeben und wie bisher mit der Referenz vergleichen.
+Erweitere #file:07-hosting/workflow.py, damit der Workflow als Agent laufen kann (Microsoft Agent Framework 1.19,
+workflow.as_agent(name="Spezifikationspruefung")):
+- Der erste Schritt bekommt Chat-Nachrichten (list[Message]) wie "Prüfe PR-101" und holt die Auftrags-ID aus
+  der letzten Nachricht. Gibt es den Auftrag nicht, antwortet der Agent mit der Fehlermeldung als JSON.
+- Das Ergebnis kommt als JSON-Text zurück, ergänzt um eine run_id (UUID).
+- Neue Funktion erstelle_agent() ohne Parameter gibt den fertigen Agenten zurück; sie verwendet
+  DefaultAzureCredential aus azure.identity. hosted.py ruft sie in Foundry auf.
+- main() ruft den Agenten mit "Prüfe <ID>" auf, gibt das Ergebnis aus und vergleicht wie bisher mit der Referenz.
 ```
 
 ```bash

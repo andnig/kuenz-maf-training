@@ -9,23 +9,19 @@ Zitat und Wert. Ob eine Anforderung erfüllt ist, entscheidet danach der Code (S
 ## Schritt 1 · Das Schema und die Extraktion
 
 ```text
-Lege 04-extraktion/extraktion.py an (Microsoft Agent Framework 1.19, Pydantic).
-1. Pydantic-Modelle mit Field(description=...):
-   Fundstelle(abschnitt, zitat, werte: list[str]),
-   Angabe(requirement_id, fundstellen: list[Fundstelle], bewertung_vorschlag: "erfüllt"/"abweichend"/"unklar" oder None, begruendung),
-   Extraktion(angaben: list[Angabe]).
-2. Eine Konstante ANWEISUNG für einen Agenten, der Angaben zu R-01 bis R-06 sucht, aber nicht bewertet
-   (außer R-06). Regeln: nur den gelieferten Text verwenden; das ganze Dokument lesen, auch den Anhang A.x;
-   wörtliche Zitate; bei unterschiedlichen Werten ALLE Fundstellen liefern; nichts erfinden.
-   Format der werte: R-01 ["DE","EN"], R-02 ["41"], R-03 ["1.4"], R-04 ["30"], R-05 ["-20","40"], R-06 [].
-3. baue_prompt(document_version): Anforderungen aus lade_anforderungskatalog("A-100") und alle Abschnitte
-   aus lade_spezifikation(version) als Text, Abschnitte mit "§" und Nummer.
-4. async extrahiere(agent, document_version): agent.run(prompt, options={"response_format": Extraktion,
-   "reasoning": {"effort": "medium"}}) und response.value zurückgeben.
-5. zitat_im_text(fundstelle, spezifikation): steht das Zitat wörtlich im genannten Abschnitt?
-6. main(): Version aus sys.argv, Agent ohne Tools mit ANWEISUNG, Angaben je Anforderung ausgeben und
-   bei jeder Fundstelle "im Text" oder "NICHT im Text" anzeigen.
-Nutze die Tools aus #file:04-extraktion/tools.py als normale Funktionen und den Aufbau von #file:04-extraktion/agent.py.
+Lege 04-extraktion/extraktion.py an (Microsoft Agent Framework 1.19). Ein Agent ohne Tools liest eine Version
+der Spezifikation und liefert zu jeder Anforderung R-01 bis R-06 die Fundstellen: Abschnitt, wörtliches Zitat
+und die gefundenen Werte. Er bewertet nicht. Nur bei R-06 schlägt er "erfüllt", "abweichend" oder "unklar" vor,
+mit Begründung.
+- Die Antwort kommt in einem festen Schema (Pydantic, response_format), nicht als freier Text.
+- Im Prompt stehen die Anforderungen von A-100 und der ganze Text der Spezifikation samt Anhang.
+  Hol beides mit den Funktionen aus #file:04-extraktion/tools.py.
+- Anweisung an den Agenten: nur den gelieferten Text verwenden, wörtlich zitieren, bei unterschiedlichen
+  Werten alle Fundstellen liefern, nichts erfinden. Werte als Liste ohne Einheit, z. B. ["DE","EN"], ["41"], ["1.4"], ["-20","40"].
+- Das Modell soll gründlich lesen (reasoning effort medium).
+- Prüfe im Code, ob jedes Zitat wirklich im genannten Abschnitt steht.
+- Aufruf mit der Version als Argument. Gib je Anforderung die Fundstellen aus, jeweils mit "im Text" oder "NICHT im Text".
+Baue den Agenten so auf wie in #file:04-extraktion/agent.py.
 ```
 
 ```bash
@@ -40,9 +36,9 @@ Die Spezifikation widerspricht sich hier. Für Version 1 nennt das Modell bei R-
 ## Code verstehen
 
 1. **Was ist neu?** Wo steht das Schema, wo wird es dem Modell übergeben?
-2. **Welche Eingaben?** Was steht im Prompt, was in der ANWEISUNG?
+2. **Welche Eingaben?** Was steht im Prompt, was in den Instructions des Agenten?
 3. **Was kommt zurück?** Was ist `response.value`, was `response.text`?
-4. **Was passiert bei Fehlern?** Was zeigt `zitat_im_text`, wenn das Modell ein Zitat erfindet?
+4. **Was passiert bei Fehlern?** Was zeigt die Ausgabe, wenn das Modell ein Zitat erfindet?
 
 Das Schema erzwingt die **Form** der Antwort, nicht ihre **Wahrheit**. Deshalb prüft der Code die Zitate.
 
