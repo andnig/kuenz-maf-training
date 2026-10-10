@@ -5,9 +5,9 @@ Microsoft Agent Framework und schreiben den Code mit deiner Hilfe selbst.
 
 ## Aufbau
 
-Die Ordner `01-hello-world` bis `07-hosting` sind aufeinanderfolgende Übungsschritte. Jeder Ordner beginnt
-ab02 mit der fertigen Lösung des vorherigen Schritts;01 ist leer und wird nach der Hauptanleitung mit dem offiziellen Foundry Toolkit erzeugt. Ein höher nummerierter Ordner enthält also die Lösung
-aller Schritte davor.
+Die Ordner `01-hello-world` bis `07-hosting` sind aufeinanderfolgende Übungsschritte.
+`01-hello-world` ist leer und wird nach der Anleitung in `README.md` mit dem offiziellen Foundry Toolkit erzeugt.
+Ab `02-tools` enthält jeder Ordner den fertigen Ausgangsstand der vorherigen Übung.
 
 ## Regeln
 

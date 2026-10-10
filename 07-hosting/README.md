@@ -73,7 +73,9 @@ cp ../.env .env
 ```
 
 Prüfe FOUNDRY_PROJECT_ENDPOINT und AZURE_AI_MODEL_DEPLOYMENT_NAME=training-chat.
-Die beiden Werte sind in `azure.yaml` als Cloud-Umgebung deklariert.
+Der Modellname ist in `azure.yaml` als Cloud-Umgebung deklariert.
+FOUNDRY_PROJECT_ENDPOINT setzt der Foundry-Dienst in der Cloud automatisch;
+für lokale Aufrufe steht er in deiner .env. Der Name ist als Deployment-Umgebungsvariable reserviert.
 Private .env, virtuelle Umgebung und Caches werden über `.agentignore` ausgeschlossen.
 Die Cloud verwendet die Identität des Agenten; deine lokale Anmeldung wird nicht hochgeladen.
 
@@ -106,7 +108,7 @@ from dotenv import load_dotenv
 
 load_dotenv(".env")
 with AIProjectClient(endpoint=os.environ["FOUNDRY_PROJECT_ENDPOINT"],
-                     credential=DefaultAzureCredential()) as project:
+                     credential=DefaultAzureCredential(), allow_preview=True) as project:
     with project.get_openai_client(agent_name="kuenz-pruefung-trainingNN") as client:
         response = client.responses.retrieve("response_id-aus-dem-Playground")
         print(response.id, response.status, response.output_text)

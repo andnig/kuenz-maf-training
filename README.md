@@ -36,7 +36,9 @@ az login --use-device-code --tenant 42abcb50-0ca4-44ec-b66c-80926c94af9d
 ```
 
 Prüfe das angemeldete Trainingskonto. `.env` enthält Projektadresse und Modell `training-chat`;
-die Datei bleibt privat. Foundry Toolkit kann zusätzlich eine eigene Anmeldung verlangen.
+die Datei bleibt privat. Foundry Toolkit meldet dich separat an; `az login` gilt für das Terminal.
+Falls **Signing in to Azure** hängen bleibt: **Cancel** → beim angebotenen alternativen
+Anmeldeweg **Yes** → **Copy & Continue**; den Gerätecode mit dem Trainingskonto bestätigen.
 
 ## Ü8 · Im leeren Ordner01 bootstrappen
 
