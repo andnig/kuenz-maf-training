@@ -1,8 +1,8 @@
 """Schritt 5: Die Prüfung als Workflow aus vier festen Schritten (Ausgangspunkt für 07-hosting).
 
 Starten im Projekt-Hauptordner:
-    uv run python 07-hosting/workflow.py PR-001
-    uv run python 07-hosting/workflow.py PR-201
+    python 07-hosting/workflow.py PR-001
+    python 07-hosting/workflow.py PR-201
 """
 
 import asyncio
@@ -82,7 +82,7 @@ def mit_referenz_vergleichen(ergebnis: dict) -> None:
 async def main() -> None:
     load_dotenv()
     endpoint = os.getenv("FOUNDRY_PROJECT_ENDPOINT")
-    model = os.getenv("FOUNDRY_MODEL")
+    model = os.getenv("AZURE_AI_MODEL_DEPLOYMENT_NAME")
     if not endpoint or not model:
         raise SystemExit(".env fehlt oder ist leer. Führe aus: cp .env.example .env")
 

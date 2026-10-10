@@ -23,8 +23,8 @@ als Text "HH:MM" zurückgibt. Verwende den Decorator @tool aus agent_framework
 Starten und vergleichen:
 
 ```bash
-uv run python 02-tools/agent.py "Wie spät ist es?"
-uv run python 02-tools/agent.py "Was ist ein Agent?"
+python 02-tools/agent.py "Wie spät ist es?"
+python 02-tools/agent.py "Was ist ein Agent?"
 ```
 
 Bei der ersten Frage ruft das Modell das Tool auf, bei der zweiten nicht. Das Modell
@@ -48,9 +48,9 @@ Halte den Code einfach. Importiere die Tools in 02-tools/agent.py, übergib alle
 ```
 
 ```bash
-uv run python 02-tools/agent.py "Was gilt für R-03 bei A-100?"
-uv run python 02-tools/agent.py "Welche Spezifikation gehört zu PR-201?"
-uv run python 02-tools/agent.py "Was steht in PR-999?"
+python 02-tools/agent.py "Was gilt für R-03 bei A-100?"
+python 02-tools/agent.py "Welche Spezifikation gehört zu PR-201?"
+python 02-tools/agent.py "Was steht in PR-999?"
 ```
 
 Erwartet: R-03 verlangt Protokollversion 2.0 · PR-201 gehört zu SPEC-001 Version 2 ·
@@ -64,7 +64,7 @@ PR-001 gehört zu Version 1, ein unbekannter Auftrag liefert "fehler", R-03 einz
 ```
 
 ```bash
-uv run pytest 02-tools
+python -m pytest 02-tools
 ```
 
 Lass dir die Tests danach erklären:

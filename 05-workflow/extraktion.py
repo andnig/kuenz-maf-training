@@ -1,8 +1,8 @@
 """Schritt 4: Das Modell liest die Spezifikation und liefert Angaben in einem festen Schema.
 
 Starten im Projekt-Hauptordner:
-    uv run python 05-workflow/extraktion.py 1
-    uv run python 05-workflow/extraktion.py 2
+    python 05-workflow/extraktion.py 1
+    python 05-workflow/extraktion.py 2
 """
 
 import asyncio
@@ -73,7 +73,7 @@ def zitat_im_text(fundstelle: Fundstelle, spezifikation: dict) -> bool:
 async def main() -> None:
     load_dotenv()
     endpoint = os.getenv("FOUNDRY_PROJECT_ENDPOINT")
-    model = os.getenv("FOUNDRY_MODEL")
+    model = os.getenv("AZURE_AI_MODEL_DEPLOYMENT_NAME")
     if not endpoint or not model:
         raise SystemExit(".env fehlt oder ist leer. Führe aus: cp .env.example .env")
 

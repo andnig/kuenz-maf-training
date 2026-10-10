@@ -1,7 +1,7 @@
 """Schritt 2: Der Agent bekommt Tools und antwortet aus unseren Daten.
 
 Starten im Projekt-Hauptordner:
-    uv run python 03-session-middleware/agent.py "Was gilt für R-03 bei A-100?"
+    python 03-session-middleware/agent.py "Was gilt für R-03 bei A-100?"
 """
 
 import asyncio
@@ -19,7 +19,7 @@ from tools import aktuelle_uhrzeit, lade_anforderungskatalog, lade_pruefauftrag,
 async def main() -> None:
     load_dotenv()
     endpoint = os.getenv("FOUNDRY_PROJECT_ENDPOINT")
-    model = os.getenv("FOUNDRY_MODEL")
+    model = os.getenv("AZURE_AI_MODEL_DEPLOYMENT_NAME")
     if not endpoint or not model:
         raise SystemExit(".env fehlt oder ist leer. Führe aus: cp .env.example .env")
 

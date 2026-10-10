@@ -1,7 +1,7 @@
 """Schritt 3: Gespräch mit Gedächtnis (Session) und sichtbaren Toolaufrufen (Middleware).
 
 Starten im Projekt-Hauptordner:
-    uv run python 04-extraktion/agent.py
+    python 04-extraktion/agent.py
 Beenden mit einer leeren Eingabe.
 """
 
@@ -27,7 +27,7 @@ async def zeige_toolaufruf(context: FunctionInvocationContext, call_next) -> Non
 async def main() -> None:
     load_dotenv()
     endpoint = os.getenv("FOUNDRY_PROJECT_ENDPOINT")
-    model = os.getenv("FOUNDRY_MODEL")
+    model = os.getenv("AZURE_AI_MODEL_DEPLOYMENT_NAME")
     if not endpoint or not model:
         raise SystemExit(".env fehlt oder ist leer. Führe aus: cp .env.example .env")
 

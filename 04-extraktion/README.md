@@ -25,8 +25,8 @@ Baue den Agenten so auf wie in #file:04-extraktion/agent.py.
 ```
 
 ```bash
-uv run python 04-extraktion/extraktion.py 1
-uv run python 04-extraktion/extraktion.py 2
+python 04-extraktion/extraktion.py 1
+python 04-extraktion/extraktion.py 2
 ```
 
 Erwartet für Version 2 bei R-04 **zwei** Fundstellen: §4.1 mit 30 ms und §A.1 mit 80 ms.

@@ -1,0 +1,9 @@
+# Python 3.13 · gemeinsamer, im Training geprüfter Paketstand.
+agent-framework-core==1.21.0
+agent-framework-foundry==1.14.1
+agent-framework-foundry-hosting==1.0.0b261008
+azure-ai-projects==2.6.1
+azure-identity==1.25.1
+python-dotenv==1.1.1
+pytest==8.4.2
+debugpy==1.8.17

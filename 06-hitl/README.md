@@ -19,7 +19,7 @@ jeden Klärungspunkt.
 ```
 
 ```bash
-uv run python 06-hitl/workflow.py PR-101
+python 06-hitl/workflow.py PR-101
 ```
 
 Nimm statt PR-101 deinen eigenen Prüfauftrag (PR-101 bis PR-105). Erwartet: zwei Fragen

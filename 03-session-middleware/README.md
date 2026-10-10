@@ -15,7 +15,7 @@ Session mit agent.create_session() (Microsoft Agent Framework 1.21). Ohne Stream
 ```
 
 ```bash
-uv run python 03-session-middleware/agent.py
+python 03-session-middleware/agent.py
 ```
 
 Frag nacheinander: „Was gilt für R-03 bei A-100?“ und dann „Und was steht dazu in Version 1 der Spezifikation?“.

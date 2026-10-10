@@ -1,67 +1,128 @@
 # 07 · Der Prüfworkflow als Hosted Agent
 
-Bisher läuft dein Workflow nur in deinem Codespace. Jetzt stellst du ihn in Microsoft
-Foundry bereit: als **Hosted Agent**, den andere über die Responses-API aufrufen können,
-zum Beispiel der Dispatcher in Copilot Studio.
+Der Prüfworkflow läuft bisher lokal. Jetzt bekommt er eine Responses-Schnittstelle und wird
+über **Foundry Toolkit → Code → Remote** bereitgestellt. Der Hosting-Einstieg ist ein kleines
+`main.py` nach dem offiziellen MAF-Sample. Deployment und Playground übernimmt VS Code.
 
-Dafür gibt es im Projekt-Hauptordner zwei fertige Werkzeuge, die für jeden MAF-Agenten passen:
+**Ausgangspunkt:** fertiger Workflow aus05, im Checkpoint07 vorbereitet.
+Lokale Befehle zunächst im Repository-Hauptordner mit aktivierter `.venv`.
 
-| Datei | Aufgabe |
-| --- | --- |
-| `hosted.py` | Läuft in Foundry. Lädt `erstelle_agent()` aus deiner Datei und stellt den Agenten bereit. |
-| `deploy.py` | Läuft im Codespace. Lädt das Projekt hoch, ruft den Agenten auf, holt gespeicherte Antworten. |
-
-Deine Aufgabe: Der Workflow bekommt eine Agent-Schnittstelle, damit Foundry und Copilot Studio ihn aufrufen können. Innen bleibt er derselbe feste Ablauf. Er bekommt eine Nachricht
-(„Prüfe PR-101“) und antwortet mit Text (dem Ergebnis als JSON).
-
-**Ausgangspunkt:** der fertige Prüfworkflow aus 05.
-
-## Schritt 1 · Dem Workflow eine Agent-Schnittstelle geben
+## Schritt 1 · Workflow als Agent
 
 ```text
-Erweitere #file:07-hosting/workflow.py, damit Foundry ihn über die Agent-Schnittstelle aufrufen kann; innen bleibt der feste Ablauf (Microsoft Agent Framework 1.21,
-workflow.as_agent(name="Spezifikationspruefung")):
-- Der erste Schritt bekommt Chat-Nachrichten (list[Message]) wie "Prüfe PR-101" und holt die Auftrags-ID aus
-  der letzten Nachricht. Gibt es den Auftrag nicht, antwortet der Agent mit der Fehlermeldung als JSON.
-- Das Ergebnis kommt als JSON-Text zurück, ergänzt um eine run_id (UUID).
-- Neue Funktion erstelle_agent() ohne Parameter gibt den fertigen Agenten zurück; sie verwendet
-  DefaultAzureCredential aus azure.identity. hosted.py ruft sie in Foundry auf.
-- main() ruft den Agenten mit "Prüfe <ID>" auf, gibt das Ergebnis aus und vergleicht wie bisher mit der Referenz.
+Erweitere #file:07-hosting/workflow.py mit der Agent-Schnittstelle von MAF 1.21.0:
+- Erster Schritt akzeptiert list[Message], extrahiert PR-xxx aus der letzten Nachricht.
+- Unbekannter Auftrag liefert die bestehende Fehlermeldung als JSON.
+- Ergebnis als JSON-Text, ergänzt um run_id (UUID).
+- erstelle_agent() baut mit FoundryChatClient und DefaultAzureCredential einen
+  FRISCHEN Workflow und gibt workflow.as_agent(name="Spezifikationspruefung") zurück.
+- Konfiguration FOUNDRY_PROJECT_ENDPOINT und AZURE_AI_MODEL_DEPLOYMENT_NAME aus .env/Cloudumgebung.
+- Lokale main() ruft "Prüfe <ID>" auf, druckt JSON und vergleicht bekannte Aufträge
+  weiterhin mit Referenzbefunden. Fehler ohne review_id ebenfalls verständlich ausgeben.
+Erhalte Extraktion, Regeln und Ergebnisstruktur.
 ```
 
 ```bash
-uv run python 07-hosting/workflow.py PR-001
+python 07-hosting/workflow.py PR-001
+python 07-hosting/workflow.py PR-999
 ```
 
-Erwartet: dasselbe Ergebnis wie in 05 (sechs ✓), jetzt mit `run_id`.
+Erwartet: PR-001 wie05 (sechs✓), zusätzlich run_id. PR-999 liefert JSON mit fehler.
 
-## Schritt 2 · Deployen
+## Schritt 2 · Hosting-Einstieg selbst ergänzen
 
-Nimm deinen Agentnamen `kuenz-pruefung-trainingNN` (NN = deine Nummer, z. B. 03).
+```text
+Erzeuge #file:07-hosting/main.py nach der offiziellen MAF-Hosting-Integration.
+Importiere ResponsesHostServer aus agent_framework_foundry_hosting,
+load_dotenv aus dotenv und erstelle_agent aus workflow.
+Unter if __name__ == "__main__": load_dotenv();
+ResponsesHostServer(erstelle_agent, history_source="agent").run().
+Übergib die Funktion als Factory, rufe sie hier nicht vorab auf:
+jede Anfrage braucht einen frischen Workflow. Die Workflow-Nachrichtenhistorie
+verwaltet MAF; history_source="agent" erhält dessen Routing.
+Kein Deployment-Skript; workflow.py bleibt direkt ausführbar.
+Erkläre Request → ResponsesHostServer → Workflow → JSON.
+```
 
 ```bash
-uv run python deploy.py deploy kuenz-pruefung-training03 --datei 07-hosting/workflow.py
+python 07-hosting/main.py
 ```
 
-Foundry baut den Agenten (etwa 1 Minute) und meldet `active`. Danach gehen alle Aufrufe an diese Version.
-
-Erscheint vorher „Kein Application Insights am Projekt; der Agent läuft ohne Tracing.“: Tracing ist im Training nicht eingerichtet; das ist ein Hinweis, kein Fehler.
-
-## Schritt 3 · Aufrufen und gespeicherte Antwort abrufen
+Der Server hört auf Port 8088. Im Toolkit **Agent Inspector** mit dem lokalen Server verbinden
+und „Prüfe PR-001“ sowie „Prüfe PR-999“ senden. Alternativ im zweiten Terminal:
 
 ```bash
-uv run python deploy.py invoke kuenz-pruefung-training03 "Prüfe PR-103"
-uv run python deploy.py status kuenz-pruefung-training03 <response_id>
+curl -s http://localhost:8088/responses -H "Content-Type: application/json" -d '{"input":"Prüfe PR-999","stream":false}'
 ```
 
-`invoke` startet eine neue Prüfung. Die erste Zeile zeigt `response_id`, Agentname und Version.
-`status` holt die gespeicherte Antwort mit dieser ID ab: kein neuer Modellaufruf, dasselbe Ergebnis, dieselbe `run_id`.
+Stoppe den lokalen Server mit Ctrl+C.
+
+## Schritt 3 · Vollständigen Quellordner prüfen
+
+Öffne **07-hosting als Workspace** in VS Code. Wähle die bestehende root `.venv` als Interpreter.
+`azure.yaml` liegt direkt in07, `services.pruefung.project` ist `.`: nur07 wird gepackt.
+`main.py`, Workflowmodule, `requirements.txt` und `daten/` müssen dort liegen.
+Die synthetischen Daten sind bereits kopiert; `tools.py` lädt diese lokale daten-Mappe.
+Bei eigenen Datenänderungen root und07 synchron halten.
+
+Im Terminal in07:
+
+```bash
+python -m pip install -r requirements.txt
+cp ../.env .env
+```
+
+Prüfe FOUNDRY_PROJECT_ENDPOINT und AZURE_AI_MODEL_DEPLOYMENT_NAME=training-chat.
+Die beiden Werte sind in `azure.yaml` als Cloud-Umgebung deklariert.
+Private .env, virtuelle Umgebung und Caches werden über `.agentignore` ausgeschlossen.
+Die Cloud verwendet die Identität des Agenten; deine lokale Anmeldung wird nicht hochgeladen.
+
+## Schritt 4 · Deployment in VS Code
+
+1. Foundry Toolkit → **Developer Tools → Build → Deploy to Microsoft Foundry**.
+2. Bestehendes Trainingsprojekt auswählen. **Code → Remote → New agent**.
+3. Eigener Name `kuenz-pruefung-trainingNN` (NN=deine Teilnehmernummer).
+4. Review: Python 3.13, Startbefehl `python3 main.py`, Quelle07-hosting,0.5CPU,1GiB.
+5. **Deploy**. Unter **My Resources → Agents → Hosted Agent → Details** den Laufstatus abwarten.
+6. **Playground**: „Prüfe PR-001“, „Prüfe PR-201“, „Prüfe PR-999“ testen.
+   Notiere Agentname, getestete Version, Endpunkt, response_id und run_id.
+
+Eine neue Version wird mit **Existing agent** bereitgestellt. Die Versionsauswahl im Playground
+ändert nur dessen Testaufrufe: **Automatic** und der spätere Dispatcher müssen ebenfalls den
+vorgesehenen Stand liefern. Falls Automatic eine alte Version liefert, Endpoint-Routing
+im Foundry-Portal auf die neue Version setzen und erneut prüfen.
+
+## Schritt 5 · Gespeicherte Antwort mit dem SDK abrufen
+
+Ein neuer Playground-Aufruf startet eine neue Prüfung. Ein GET mit der response_id liest
+das gespeicherte Resultat ohne neue Prüfung. Aus dem Projekt-Client direkt abrufen;
+Agentname muss zu dem Endpunkt passen, der die Response erzeugt hat:
+
+```python
+import os
+from azure.ai.projects import AIProjectClient
+from azure.identity import DefaultAzureCredential
+from dotenv import load_dotenv
+
+load_dotenv(".env")
+with AIProjectClient(endpoint=os.environ["FOUNDRY_PROJECT_ENDPOINT"],
+                     credential=DefaultAzureCredential()) as project:
+    with project.get_openai_client(agent_name="kuenz-pruefung-trainingNN") as client:
+        response = client.responses.retrieve("response_id-aus-dem-Playground")
+        print(response.id, response.status, response.output_text)
+```
+
+Du kannst den kurzen Code im Python-Terminal ausführen; ein eigenes Hilfsskript ist nicht nötig.
+Prüfe dieselbe response_id, dasselbe JSON und dieselbe run_id. Technisch completed ist
+noch keine menschliche Freigabe. Danach folgt die Agent-Evaluation im Toolkit/Foundry-Portal
+und die Anbindung des Dispatchers.
 
 ## Code verstehen
 
-1. **Was ist neu?** Was macht `as_agent()`, und warum braucht der erste Schritt jetzt `list[Message]`?
-2. **Welche Eingaben?** Was schickt `deploy.py invoke` an Foundry, was kommt in `hosted.py` an?
-3. **Was kommt zurück?** Woher kommen `response_id`, Agentname und Version, woher `run_id`?
-4. **Was passiert bei Fehlern?** Was antwortet der Agent auf „Prüfe PR-999“?
+1. Warum as_agent()? Wie wird aus "Prüfe PR-001" die Auftrags-ID?
+2. Warum eine Factory pro Request statt eines gemeinsam genutzten Workflows?
+3. Welche IDs liefert der Workflow, welche der Responses-Dienst?
+4. Was wird gepackt, was bleibt privat, welche Identität läuft in der Cloud?
 
-`hosted.py` und `deploy.py` musst du nicht ändern. Lies sie trotzdem einmal: Beide sind kurz.
+[Toolkit-Anleitung](https://code.visualstudio.com/docs/intelligentapps/hosted-agents) ·
+[Hosting vorhandenen Codes](https://learn.microsoft.com/en-us/azure/foundry/agents/quickstarts/quickstart-deploy-own-code?tabs=python-responses)

@@ -8,7 +8,7 @@ from typing import Annotated
 from agent_framework import tool
 from pydantic import Field
 
-DATEN = Path(__file__).resolve().parent.parent / "daten"
+DATEN = Path(__file__).resolve().parent / "daten"
 
 
 def lade_json(dateiname: str) -> dict:

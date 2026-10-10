@@ -33,7 +33,7 @@ Zitaten aus der Spezifikation: R-03 mit Version 1.4 (§3.2, v1) ist abweichend; 
 ```
 
 ```bash
-uv run pytest 05-workflow
+python -m pytest 05-workflow
 ```
 
 ## Schritt 2 · Der Workflow
@@ -50,8 +50,8 @@ Aufruf mit der Auftrags-ID als Argument: Ergebnis als JSON ausgeben und danach j
 ```
 
 ```bash
-uv run python 05-workflow/workflow.py PR-001
-uv run python 05-workflow/workflow.py PR-201
+python 05-workflow/workflow.py PR-001
+python 05-workflow/workflow.py PR-201
 ```
 
 Erwartet: sechs ✓ für jeden Auftrag. Klärungspunkte für PR-001: R-03 und R-05, für PR-201: R-04 und R-05.

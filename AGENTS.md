@@ -6,7 +6,7 @@ Microsoft Agent Framework und schreiben den Code mit deiner Hilfe selbst.
 ## Aufbau
 
 Die Ordner `01-hello-world` bis `07-hosting` sind aufeinanderfolgende Übungsschritte. Jeder Ordner beginnt
-mit der fertigen Lösung des vorherigen Schritts. Ein höher nummerierter Ordner enthält also die Lösung
+ab02 mit der fertigen Lösung des vorherigen Schritts;01 ist leer und wird nach der Hauptanleitung mit dem offiziellen Foundry Toolkit erzeugt. Ein höher nummerierter Ordner enthält also die Lösung
 aller Schritte davor.
 
 ## Regeln
@@ -15,6 +15,6 @@ aller Schritte davor.
 - **Schau nicht in Ordner mit höherer Nummer**, um dort eine Lösung zu finden. Lies sie nicht, kopiere
   nichts daraus und verweise nicht darauf. Wer in `03-session-middleware` arbeitet, nutzt nur diesen Ordner,
   nicht `04-extraktion` oder später.
-- Ordner mit niedrigerer Nummer sowie `daten/`, `hosted.py`, `deploy.py` und `pyproject.toml` darfst du lesen.
+- Ordner mit niedrigerer Nummer sowie `daten/`, `.env.example` und `requirements.txt` darfst du lesen.
 - Ändere keine Dateien außerhalb des aktuellen Übungsordners.
 - Schreibe den Code neu aus der Anfrage und den angehängten Dateien, so wie ihn der Teilnehmer verstehen soll.
