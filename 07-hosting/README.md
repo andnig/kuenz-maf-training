@@ -112,10 +112,13 @@ with AIProjectClient(endpoint=os.environ["FOUNDRY_PROJECT_ENDPOINT"],
     with project.get_openai_client(agent_name="kuenz-pruefung-trainingNN") as client:
         response = client.responses.retrieve("response_id-aus-dem-Playground")
         print(response.id, response.status, response.output_text)
+        print(response.model_dump().get("agent"))  # tatsächlicher Agentname und Version
 ```
 
 Du kannst den kurzen Code im Python-Terminal ausführen; ein eigenes Hilfsskript ist nicht nötig.
-Prüfe dieselbe response_id, dasselbe JSON und dieselbe run_id. Technisch completed ist
+Prüfe dieselbe response_id, dasselbe JSON und dieselbe run_id. Im gespeicherten GET nennt
+`agent` den tatsächlichen Agentnamen und die Version; diese Version mit dem beabsichtigten
+Deployment vergleichen. Technisch completed ist
 noch keine menschliche Freigabe. Danach folgt die Agent-Evaluation im Toolkit/Foundry-Portal
 und die Anbindung des Dispatchers.
 
